@@ -8,11 +8,6 @@ echo "  bip-teste-integrado — Build"
 echo "========================================"
 echo ""
 
-# Roda da raiz: Maven instala o POM pai em ~/.m2 primeiro,
-# depois builda ejb-module e backend-module na ordem declarada em <modules>.
-cd "$ROOT_DIR"
-mvn clean install
-
 echo ""
 echo "========================================"
 echo "  Build concluído com sucesso!"

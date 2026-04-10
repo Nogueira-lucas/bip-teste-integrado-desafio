@@ -1,2 +1,9 @@
 com\lucasnogueira\ejb\BeneficioEjbService.class
+com\lucasnogueira\ejb\validator\ValidadorSaldoSuficiente.class
+com\lucasnogueira\ejb\validator\ValidadorValorPositivo.class
+com\lucasnogueira\ejb\validator\ValidadorIdsObrigatorios.class
+com\lucasnogueira\ejb\validator\ValidadorBeneficioExistente.class
 com\lucasnogueira\ejb\Beneficio.class
+com\lucasnogueira\ejb\validator\CadeiaValidadores.class
+com\lucasnogueira\ejb\validator\ValidadorMesmaConta.class
+com\lucasnogueira\ejb\validator\ValidadorTransferencia.class

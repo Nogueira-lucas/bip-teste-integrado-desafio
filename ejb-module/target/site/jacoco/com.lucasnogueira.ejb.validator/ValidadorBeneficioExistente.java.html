@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ValidadorBeneficioExistente.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ejb-module</a> &gt; <a href="index.source.html" class="el_package">com.lucasnogueira.ejb.validator</a> &gt; <span class="el_source">ValidadorBeneficioExistente.java</span></div><h1>ValidadorBeneficioExistente.java</h1><pre class="source lang-java linenums">package com.lucasnogueira.ejb.validator;
+
+import com.lucasnogueira.ejb.Beneficio;
+import lombok.extern.log4j.Log4j2;
+
+import java.math.BigDecimal;
+
+<span class="fc" id="L8">@Log4j2</span>
+<span class="fc" id="L9">public class ValidadorBeneficioExistente implements ValidadorTransferencia {</span>
+
+    @Override
+    public void validar(Long fromId, Long toId, BigDecimal amount, Beneficio from, Beneficio to) {
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if (from == null) {</span>
+<span class="fc" id="L14">            log.error(&quot;Beneficio de origem nao encontrado: id={}&quot;, fromId);</span>
+<span class="fc" id="L15">            throw new IllegalArgumentException(&quot;Benefício de origem não encontrado&quot;);</span>
+        }
+
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        if (to == null) {</span>
+<span class="fc" id="L19">            log.error(&quot;Beneficio de destino nao encontrado: id={}&quot;, toId);</span>
+<span class="fc" id="L20">            throw new IllegalArgumentException(&quot;Benefício de destino não encontrado&quot;);</span>
+        }
+<span class="fc" id="L22">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,6 @@
+com\lucasnogueira\backend\BackendApplication.class
+com\lucasnogueira\backend\config\EjbConfig.class
+com\lucasnogueira\backend\controller\BeneficioController.class
+com\lucasnogueira\backend\service\BeneficioService.class
+com\lucasnogueira\backend\handler\GlobalExceptionHandler.class
+com\lucasnogueira\backend\repository\BeneficioRepository.class

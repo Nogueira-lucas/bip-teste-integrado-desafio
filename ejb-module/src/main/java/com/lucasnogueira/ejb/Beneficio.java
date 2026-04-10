@@ -1,47 +1,37 @@
 package com.lucasnogueira.ejb;
 
+import jakarta.ejb.Singleton;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "BENEFICIO")
+@Table(name = "beneficio")
+@Getter
+@Setter
 public class Beneficio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "NOME", nullable = false, length = 100)
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "DESCRICAO", length = 255)
+    @Column(name = "descricao", length = 255)
     private String descricao;
 
-    @Column(name = "VALOR", nullable = false, precision = 15, scale = 2)
+    @Column(name = "valor", nullable = false, precision = 15, scale = 2)
     private BigDecimal valor;
 
-    @Column(name = "ATIVO")
+    @Column(name = "ativo")
     private Boolean ativo = Boolean.TRUE;
 
     @Version
-    @Column(name = "VERSION")
+    @Column(name = "version")
     private Long version = 0L;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-
-    public String getDescricao() { return descricao; }
-    public void setDescricao(String descricao) { this.descricao = descricao; }
-
-    public BigDecimal getValor() { return valor; }
-    public void setValor(BigDecimal valor) { this.valor = valor; }
-
-    public Boolean getAtivo() { return ativo; }
-    public void setAtivo(Boolean ativo) { this.ativo = ativo; }
-
-    public Long getVersion() { return version; }
-    public void setVersion(Long version) { this.version = version; }
 }

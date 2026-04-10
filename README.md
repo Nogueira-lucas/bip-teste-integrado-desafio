@@ -69,6 +69,126 @@ Com isso, as classes `Beneficio` (entidade JPA) e `BeneficioEjbService` ficam di
 
 ---
 
+## Testes Unitários
+
+Os testes são executados **sem necessidade de banco de dados ou Docker** — usam Mockito para isolar dependências externas e H2 em memória quando o contexto Spring é necessário.
+
+### Estrutura dos testes
+
+| Arquivo | Módulo | O que testa |
+|---------|--------|-------------|
+| `BeneficioEjbServiceTest` | `ejb-module` | Lógica de transferência entre benefícios |
+| `BeneficioServiceTest` | `backend-module` | CRUD completo: listar, buscar, criar, atualizar, deletar e transferir |
+| `BeneficioControllerTest` | `backend-module` | Endpoints REST: status HTTP, corpo da resposta e header `Location` |
+
+### Executando todos os testes
+
+Na raiz do projeto:
+
+```bash
+mvn test
+```
+
+### Executando os testes de um módulo específico
+
+```bash
+# Apenas ejb-module
+mvn test -pl ejb-module
+
+# Apenas backend-module
+mvn test -pl backend-module
+```
+
+> O `backend-module` depende do JAR do `ejb-module`. Se for a primeira vez ou após alterações no `ejb-module`, compile antes:
+> ```bash
+> mvn install -pl ejb-module && mvn test -pl backend-module
+> ```
+
+### Executando uma classe de teste específica
+
+```bash
+# ejb-module
+mvn test -pl ejb-module -Dtest=BeneficioEjbServiceTest
+
+# backend-module — service
+mvn test -pl backend-module -Dtest=BeneficioServiceTest
+
+# backend-module — controller
+mvn test -pl backend-module -Dtest=BeneficioControllerTest
+```
+
+### Executando um único método de teste
+
+```bash
+mvn test -pl backend-module -Dtest="BeneficioServiceTest#deletar_deveLancarExcecao_quandoNaoExistir"
+```
+
+### Relatório de execução (Surefire)
+
+Após a execução, os relatórios de resultado ficam disponíveis em:
+
+```
+ejb-module/target/surefire-reports/
+backend-module/target/surefire-reports/
+```
+
+---
+
+## Cobertura de código (JaCoCo)
+
+O plugin JaCoCo está configurado no POM pai e se aplica automaticamente a todos os módulos. Não é necessária nenhuma configuração extra para usá-lo.
+
+### Executar testes e gerar relatório de cobertura
+
+```bash
+# Na raiz do projeto — executa testes e gera o relatório em seguida
+mvn verify
+```
+
+> `mvn verify` executa as fases `test` + `verify`. O JaCoCo instrumenta os testes durante `test` e gera o relatório na fase `verify`.
+
+### Abrir o relatório
+
+Após o `mvn verify`, os relatórios HTML ficam em:
+
+```
+ejb-module/target/site/jacoco/index.html
+backend-module/target/site/jacoco/index.html
+```
+
+Abra o `index.html` do módulo desejado diretamente no navegador.
+
+### Gerar relatório de um módulo específico
+
+```bash
+# ejb-module
+mvn verify -pl ejb-module
+
+# backend-module (instala ejb-module antes, pois é dependência)
+mvn install -pl ejb-module && mvn verify -pl backend-module
+```
+
+### Regenerar o relatório sem rodar os testes novamente
+
+Se os testes já foram executados e o arquivo `jacoco.exec` existe em `target/`, é possível gerar apenas o relatório:
+
+```bash
+mvn jacoco:report -pl ejb-module
+mvn jacoco:report -pl backend-module
+```
+
+### Estrutura do relatório HTML
+
+| Coluna | O que mede |
+|--------|------------|
+| **Instructions** | Bytecodes Java cobertos |
+| **Branches** | Cobertura de desvios (`if`, `switch`, ternário) |
+| **Lines** | Linhas executadas ao menos uma vez |
+| **Methods** | Métodos invocados pelos testes |
+| **Classes** | Classes carregadas durante os testes |
+
+---
+
 ## Banco de Dados
 
 O banco de dados é provisionado via Docker usando PostgreSQL 16.
