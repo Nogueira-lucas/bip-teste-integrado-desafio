@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.lucasnogueira</groupId>
+        <artifactId>bip-teste-integrado</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ejb-module</artifactId>
+    <packaging>jar</packaging>
+    <name>ejb-module</name>
+    <description>Serviço EJB stateless com lógica de negócio transacional para gerenciamento de benefícios</description>
+
+    <dependencies>
+        <!--
+            Jakarta EE API — escopo provided: as anotações (@Stateless, @PersistenceContext)
+            precisam estar no classpath para compilar, mas o container (ou Spring Boot)
+            provê a implementação em runtime.
+        -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <!-- versão gerenciada pelo POM pai via dependencyManagement -->
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>

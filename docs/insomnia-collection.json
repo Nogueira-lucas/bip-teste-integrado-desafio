@@ -1,0 +1,115 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-04-09T00:00:00.000Z",
+  "__export_source": "bip-teste-integrado",
+  "resources": [
+    {
+      "_id": "wrk_bip",
+      "_type": "workspace",
+      "name": "bip-teste-integrado",
+      "description": "API de Benefícios — Spring Boot",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_bip_base",
+      "_type": "environment",
+      "parentId": "wrk_bip",
+      "name": "Base",
+      "data": {
+        "base_url": "http://localhost:8080"
+      }
+    },
+    {
+      "_id": "fld_beneficios",
+      "_type": "request_group",
+      "parentId": "wrk_bip",
+      "name": "Benefícios"
+    },
+
+    {
+      "_id": "req_listar",
+      "_type": "request",
+      "parentId": "fld_beneficios",
+      "name": "Listar todos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/beneficios",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_buscar",
+      "_type": "request",
+      "parentId": "fld_beneficios",
+      "name": "Buscar por ID",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/v1/beneficios/1",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_criar",
+      "_type": "request",
+      "parentId": "fld_beneficios",
+      "name": "Criar",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/beneficios",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Beneficio C\",\n  \"descricao\": \"Descrição do novo benefício\",\n  \"valor\": 750.00,\n  \"ativo\": true\n}"
+      }
+    },
+    {
+      "_id": "req_atualizar",
+      "_type": "request",
+      "parentId": "fld_beneficios",
+      "name": "Atualizar",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/v1/beneficios/1",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Beneficio A Atualizado\",\n  \"descricao\": \"Nova descrição\",\n  \"valor\": 1200.00,\n  \"ativo\": true\n}"
+      }
+    },
+    {
+      "_id": "req_deletar",
+      "_type": "request",
+      "parentId": "fld_beneficios",
+      "name": "Deletar",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/v1/beneficios/1",
+      "headers": [],
+      "body": {}
+    },
+    {
+      "_id": "req_transferencia",
+      "_type": "request",
+      "parentId": "fld_beneficios",
+      "name": "Transferência",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/v1/beneficios/transferencia",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fromId\": 1,\n  \"toId\": 2,\n  \"valor\": 200.00\n}"
+      }
+    }
+  ]
+}

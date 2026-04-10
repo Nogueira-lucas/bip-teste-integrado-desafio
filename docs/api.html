@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentação da API — Benefícios</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6f9;
+      color: #2d3748;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1a365d;
+      color: #fff;
+      padding: 2rem 2.5rem;
+    }
+    header h1 { font-size: 1.75rem; font-weight: 700; }
+    header p  { margin-top: .25rem; color: #90cdf4; font-size: .95rem; }
+
+    main {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    /* ── Section headings ── */
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1a365d;
+      border-bottom: 2px solid #bee3f8;
+      padding-bottom: .4rem;
+      margin: 2.5rem 0 1rem;
+    }
+    h3 { font-size: 1rem; font-weight: 600; color: #2c5282; margin: 1.25rem 0 .5rem; }
+
+    /* ── Data model table ── */
+    .table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      font-size: .9rem;
+    }
+    thead { background: #2b6cb0; color: #fff; }
+    th, td { padding: .65rem 1rem; text-align: left; }
+    tbody tr:nth-child(even) { background: #ebf8ff; }
+    tbody tr:hover { background: #bee3f8; }
+    td code, th code {
+      background: rgba(255,255,255,.25);
+      padding: .1rem .35rem;
+      border-radius: 4px;
+      font-size: .85rem;
+      font-family: "Fira Code", "Cascadia Code", monospace;
+    }
+    td code { background: #e2e8f0; color: #2d3748; }
+
+    /* ── CRUD cards ── */
+    .endpoint {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .75rem 1.25rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .method {
+      font-weight: 700;
+      font-size: .8rem;
+      padding: .25rem .6rem;
+      border-radius: 4px;
+      min-width: 56px;
+      text-align: center;
+      letter-spacing: .05em;
+    }
+    .GET    { background: #c6f6d5; color: #22543d; }
+    .POST   { background: #bee3f8; color: #1a365d; }
+    .PUT    { background: #fefcbf; color: #744210; }
+    .DELETE { background: #fed7d7; color: #742a2a; }
+
+    .path {
+      font-family: "Fira Code", "Cascadia Code", monospace;
+      font-size: .95rem;
+      color: #2d3748;
+    }
+    .endpoint-body { padding: 1rem 1.25rem; font-size: .88rem; }
+    .endpoint-body p { margin-bottom: .5rem; }
+    .endpoint-body strong { color: #2c5282; }
+
+    pre {
+      background: #1a202c;
+      color: #e2e8f0;
+      border-radius: 6px;
+      padding: .9rem 1.1rem;
+      overflow-x: auto;
+      font-size: .82rem;
+      font-family: "Fira Code", "Cascadia Code", monospace;
+      margin-top: .4rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: .75rem;
+      padding: .15rem .5rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .badge-required { background: #fed7d7; color: #742a2a; }
+    .badge-optional { background: #e2e8f0; color: #4a5568; }
+
+    .responses { margin-top: .75rem; }
+    .response-row {
+      display: flex;
+      align-items: flex-start;
+      gap: .6rem;
+      margin: .3rem 0;
+      font-size: .85rem;
+    }
+    .status {
+      font-weight: 700;
+      min-width: 38px;
+      padding: .15rem .4rem;
+      border-radius: 4px;
+      text-align: center;
+      font-size: .8rem;
+    }
+    .s2xx { background: #c6f6d5; color: #22543d; }
+    .s4xx { background: #fefcbf; color: #744210; }
+    .s5xx { background: #fed7d7; color: #742a2a; }
+
+    .base-url {
+      display: inline-block;
+      background: #2b6cb0;
+      color: #fff;
+      padding: .3rem .8rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: .9rem;
+      margin-top: .4rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: .8rem;
+      color: #a0aec0;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>API de Benefícios</h1>
+  <p>Modelo de dados e operações CRUD — bip-teste-integrado</p>
+</header>
+
+<main>
+
+  <!-- BASE URL -->
+  <h2>Base URL</h2>
+  <span class="base-url">http://localhost:8080/api/v1</span>
+
+  <!-- ── MODELO DE DADOS ── -->
+  <h2>Modelo de Dados — Tabela <code>BENEFICIO</code></h2>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Coluna</th>
+          <th>Tipo SQL</th>
+          <th>Restrições</th>
+          <th>Descrição</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>ID</code></td>
+          <td><code>BIGINT</code></td>
+          <td>PK · GENERATED ALWAYS AS IDENTITY</td>
+          <td>Identificador único, gerado automaticamente pelo banco</td>
+        </tr>
+        <tr>
+          <td><code>NOME</code></td>
+          <td><code>VARCHAR(100)</code></td>
+          <td>NOT NULL</td>
+          <td>Nome do benefício</td>
+        </tr>
+        <tr>
+          <td><code>DESCRICAO</code></td>
+          <td><code>VARCHAR(255)</code></td>
+          <td>—</td>
+          <td>Descrição detalhada do benefício</td>
+        </tr>
+        <tr>
+          <td><code>VALOR</code></td>
+          <td><code>DECIMAL(15,2)</code></td>
+          <td>NOT NULL</td>
+          <td>Valor monetário do benefício</td>
+        </tr>
+        <tr>
+          <td><code>ATIVO</code></td>
+          <td><code>BOOLEAN</code></td>
+          <td>DEFAULT TRUE</td>
+          <td>Indica se o benefício está ativo</td>
+        </tr>
+        <tr>
+          <td><code>VERSION</code></td>
+          <td><code>BIGINT</code></td>
+          <td>DEFAULT 0</td>
+          <td>Controle de versão para optimistic locking (JPA <code>@Version</code>)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Representação JSON</h3>
+  <pre>{
+  "id":       1,
+  "nome":     "Beneficio A",
+  "descricao": "Descrição A",
+  "valor":    1000.00,
+  "ativo":    true,
+  "version":  0
+}</pre>
+
+  <!-- ── CRUD ── -->
+  <h2>Operações CRUD — <code>/beneficios</code></h2>
+
+  <!-- LIST -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method GET">GET</span>
+      <span class="path">/beneficios</span>
+    </div>
+    <div class="endpoint-body">
+      <p><strong>Descrição:</strong> Retorna a lista de todos os benefícios cadastrados.</p>
+      <p><strong>Parâmetros:</strong> nenhum</p>
+      <h3>Resposta de sucesso</h3>
+      <pre>[
+  {
+    "id": 1,
+    "nome": "Beneficio A",
+    "descricao": "Descrição A",
+    "valor": 1000.00,
+    "ativo": true,
+    "version": 0
+  },
+  {
+    "id": 2,
+    "nome": "Beneficio B",
+    "descricao": "Descrição B",
+    "valor": 500.00,
+    "ativo": true,
+    "version": 0
+  }
+]</pre>
+      <div class="responses">
+        <div class="response-row"><span class="status s2xx">200</span><span>Lista retornada com sucesso (array vazio se não houver registros)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GET BY ID -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method GET">GET</span>
+      <span class="path">/beneficios/{id}</span>
+    </div>
+    <div class="endpoint-body">
+      <p><strong>Descrição:</strong> Retorna um benefício pelo seu ID.</p>
+      <p><strong>Path param:</strong> <code>id</code> <span class="badge badge-required">obrigatório</span> — identificador do benefício</p>
+      <h3>Resposta de sucesso</h3>
+      <pre>{
+  "id": 1,
+  "nome": "Beneficio A",
+  "descricao": "Descrição A",
+  "valor": 1000.00,
+  "ativo": true,
+  "version": 0
+}</pre>
+      <div class="responses">
+        <div class="response-row"><span class="status s2xx">200</span><span>Benefício encontrado</span></div>
+        <div class="response-row"><span class="status s4xx">404</span><span>Benefício não encontrado para o ID informado</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method POST">POST</span>
+      <span class="path">/beneficios</span>
+    </div>
+    <div class="endpoint-body">
+      <p><strong>Descrição:</strong> Cria um novo benefício.</p>
+      <p><strong>Content-Type:</strong> <code>application/json</code></p>
+      <h3>Request body</h3>
+      <pre>{
+  "nome":      "Beneficio C",          // <span class="badge badge-required">obrigatório</span>
+  "descricao": "Descrição do novo",    // <span class="badge badge-optional">opcional</span>
+  "valor":     750.00,                 // <span class="badge badge-required">obrigatório</span>
+  "ativo":     true                    // <span class="badge badge-optional">opcional — padrão true</span>
+}</pre>
+      <h3>Resposta de sucesso</h3>
+      <pre>{
+  "id": 3,
+  "nome": "Beneficio C",
+  "descricao": "Descrição do novo",
+  "valor": 750.00,
+  "ativo": true,
+  "version": 0
+}</pre>
+      <div class="responses">
+        <div class="response-row"><span class="status s2xx">201</span><span>Benefício criado; <code>Location</code> header aponta para o novo recurso</span></div>
+        <div class="response-row"><span class="status s4xx">400</span><span>Dados inválidos (campo obrigatório ausente, valor negativo, etc.)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UPDATE -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method PUT">PUT</span>
+      <span class="path">/beneficios/{id}</span>
+    </div>
+    <div class="endpoint-body">
+      <p><strong>Descrição:</strong> Atualiza todos os campos de um benefício existente.</p>
+      <p><strong>Path param:</strong> <code>id</code> <span class="badge badge-required">obrigatório</span></p>
+      <p><strong>Content-Type:</strong> <code>application/json</code></p>
+      <h3>Request body</h3>
+      <pre>{
+  "nome":      "Beneficio A Atualizado",
+  "descricao": "Nova descrição",
+  "valor":     1200.00,
+  "ativo":     true,
+  "version":   0    // <span class="badge badge-required">obrigatório — optimistic locking</span>
+}</pre>
+      <h3>Resposta de sucesso</h3>
+      <pre>{
+  "id": 1,
+  "nome": "Beneficio A Atualizado",
+  "descricao": "Nova descrição",
+  "valor": 1200.00,
+  "ativo": true,
+  "version": 1
+}</pre>
+      <div class="responses">
+        <div class="response-row"><span class="status s2xx">200</span><span>Benefício atualizado com sucesso</span></div>
+        <div class="response-row"><span class="status s4xx">400</span><span>Dados inválidos</span></div>
+        <div class="response-row"><span class="status s4xx">404</span><span>Benefício não encontrado</span></div>
+        <div class="response-row"><span class="status s4xx">409</span><span>Conflito de versão (optimistic locking) — recurso foi alterado por outro processo</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method DELETE">DELETE</span>
+      <span class="path">/beneficios/{id}</span>
+    </div>
+    <div class="endpoint-body">
+      <p><strong>Descrição:</strong> Remove um benefício pelo seu ID.</p>
+      <p><strong>Path param:</strong> <code>id</code> <span class="badge badge-required">obrigatório</span></p>
+      <p><strong>Parâmetros:</strong> nenhum no body</p>
+      <div class="responses">
+        <div class="response-row"><span class="status s2xx">204</span><span>Benefício removido com sucesso (sem conteúdo na resposta)</span></div>
+        <div class="response-row"><span class="status s4xx">404</span><span>Benefício não encontrado</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRANSFER ── -->
+  <h2>Operação Extra — Transferência de Valor</h2>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="method POST">POST</span>
+      <span class="path">/beneficios/transferencia</span>
+    </div>
+    <div class="endpoint-body">
+      <p><strong>Descrição:</strong> Transfere um valor do saldo de um benefício para outro de forma atômica e segura (via EJB com optimistic locking e validação de saldo).</p>
+      <p><strong>Content-Type:</strong> <code>application/json</code></p>
+      <h3>Request body</h3>
+      <pre>{
+  "fromId": 1,       // <span class="badge badge-required">obrigatório</span> — ID do benefício de origem
+  "toId":   2,       // <span class="badge badge-required">obrigatório</span> — ID do benefício de destino
+  "valor":  200.00   // <span class="badge badge-required">obrigatório</span> — valor a transferir (> 0)
+}</pre>
+      <div class="responses">
+        <div class="response-row"><span class="status s2xx">200</span><span>Transferência realizada com sucesso</span></div>
+        <div class="response-row"><span class="status s4xx">400</span><span>Saldo insuficiente, valor inválido ou IDs iguais</span></div>
+        <div class="response-row"><span class="status s4xx">404</span><span>Um dos benefícios não encontrado</span></div>
+        <div class="response-row"><span class="status s4xx">409</span><span>Conflito de versão — tente novamente</span></div>
+        <div class="response-row"><span class="status s5xx">500</span><span>Erro interno; transação revertida (rollback automático pelo EJB)</span></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>bip-teste-integrado &mdash; Documentação gerada manualmente</p>
+</footer>
+
+</body>
+</html>

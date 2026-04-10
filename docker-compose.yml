@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bip-db
+    environment:
+      POSTGRES_DB: bipdb
+      POSTGRES_USER: bip
+      POSTGRES_PASSWORD: bip123
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+      - bip-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bip -d bipdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  bip-db-data:
