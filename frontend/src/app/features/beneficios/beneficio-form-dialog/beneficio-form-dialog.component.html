@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Editar Benefício' : 'Novo Benefício' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-grid">
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" placeholder="Ex.: Vale Refeição" />
+      @if (form.get('nome')?.hasError('required')) {
+        <mat-error>Nome é obrigatório</mat-error>
+      }
+      @if (form.get('nome')?.hasError('maxlength')) {
+        <mat-error>Máximo 100 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput formControlName="descricao" rows="3" placeholder="Descrição opcional"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Valor (R$)</mat-label>
+      <input matInput type="number" step="0.01" min="0.01" formControlName="valor" />
+      @if (form.get('valor')?.hasError('required')) {
+        <mat-error>Valor é obrigatório</mat-error>
+      }
+      @if (form.get('valor')?.hasError('min')) {
+        <mat-error>Valor deve ser maior que zero</mat-error>
+      }
+    </mat-form-field>
+
+    @if (isEdit) {
+      <mat-slide-toggle formControlName="ativo">Ativo</mat-slide-toggle>
+    }
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="salvar()" [disabled]="form.invalid || saving">
+    {{ saving ? 'Salvando…' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,35 @@
+.spacer { flex: 1; }
+
+.toolbar-btn {
+  margin-left: 8px;
+}
+
+.container {
+  padding: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+.no-data {
+  text-align: center;
+  padding: 24px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+::ng-deep .chip-ativo {
+  background-color: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}
+
+::ng-deep .chip-inativo {
+  background-color: #fce4ec !important;
+  color: #c62828 !important;
+}

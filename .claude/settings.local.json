@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(npx @angular/cli@lts version)",
+      "Bash(npm show:*)",
+      "Bash(npx --yes @angular/cli@20 new frontend --routing=true --style=scss --skip-git=true --package-manager=npm --directory=frontend --force)",
+      "Bash(npx @angular/cli@20 add @angular/material --skip-confirmation --theme=azure-blue --typography=true --animations=enabled)",
+      "Bash(npx @angular/cli@20 build)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)"
+    ]
+  }
+}
